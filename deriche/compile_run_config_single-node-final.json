@@ -1,0 +1,89 @@
+{
+    "build-configs": [
+        {
+            "build-dir": "sequential",
+            "build-cmd": "make -j4 deriche_bench"
+        },
+        {
+            "build-dir": "omp",
+            "build-cmd": "make -j4 deriche_bench"
+        },
+        {
+            "build-dir": "MPI_omp",
+            "build-cmd": "make -j4 deriche_bench"
+        },
+        {
+            "build-dir": "MPI_kokkos/build",
+            "build-cmd": "cmake ../. -DKOKKOS_DIR={0} -DCMAKE_BUILD_TYPE=Release; make -j4"
+        },
+        {
+            "build-dir": "kokkos/build",
+            "build-cmd": "cmake ../. -DKOKKOS_DIR={0} -DCMAKE_BUILD_TYPE=Release; make -j4"
+        }
+    ],
+    "run-configs-multi-node": [
+        {
+            "build-dir": "MPI_omp",
+            "run-cmd": "mpirun -n {0} --map-by node:PE=1 ./deriche_bench.o {1} {2} {3}",
+            "num-runs": 20
+        },
+        {
+            "build-dir": "MPI_kokkos/build",
+            "run-cmd": "mpirun -n {0} --map-by node:PE=1 ./deriche_bench.o {1} {2} {3}",
+            "num-runs": 20
+        }
+    ],
+    "run-configs-single-node": [
+        {
+            "build-dir": "sequential",
+            "run-cmd": "./deriche_bench.o {0} {1} {2}",
+            "num-runs": 20
+        },
+        {
+            "build-dir": "omp",
+            "run-cmd": "./deriche_bench.o {0} {1} {2}",
+            "num-runs": 20
+        },
+        {
+            "build-dir": "kokkos/build",
+            "run-cmd": "./deriche_bench.o {0} {1} {2}",
+            "num-runs": 20
+        }
+    ],
+    "bench-configs-single-node": [
+        2,
+        4,
+        8,
+        12,
+        16,
+        24,
+        32
+    ],
+    "bench-configs-multi-node": [],
+    "size-configs": [
+        {
+            "w": 1024,
+            "h": 1024
+        },
+        {
+            "w": 2048,
+            "h": 2048
+        },
+        {
+            "w": 4096,
+            "h": 4096
+        },
+        {
+            "w": 6144,
+            "h": 6144
+        },
+        {
+            "w": 8192,
+            "h": 8192
+        },
+        {
+            "w": 12288,
+            "h": 12288
+        }
+    ]
+}

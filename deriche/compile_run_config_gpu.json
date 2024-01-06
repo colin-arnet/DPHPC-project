@@ -1,0 +1,54 @@
+{
+    "build-configs": [
+        {
+            "build-dir": "cuda/build",
+            "build-cmd": "cmake ../. -DCMAKE_BUILD_TYPE=Release; make -j4"
+        },
+        {
+            "build-dir": "kokkos_gpu",
+            "build-cmd": "make -j4"
+        }
+
+    ],
+    "run-configs-single-node": [
+        {
+            "build-dir": "cuda/build",
+            "run-cmd": "./deriche_bench {1} {2}"
+        },
+        {
+            "build-dir": "kokkos_gpu",
+            "run-cmd": "./deriche_bench {1} {2}"
+        }
+    ],
+    "bench-configs-single-node": [ 1   ],
+
+    "bench-configs-multi-node": [
+        {
+            "num-nodes": 2,
+            "num-threads": 1
+        },
+        {
+            "num-nodes": 2,
+            "num-threads": 2
+        }
+    ],
+    "size-configs": [
+        {
+            "w": 1000,
+            "h": 1000
+        },
+        {
+            "w": 5000,
+            "h": 5000
+        },
+        {
+            "w": 10000,
+            "h": 10000
+        },
+        {
+            "w": 15000,
+            "h": 15000
+        }
+
+    ]
+}

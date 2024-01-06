@@ -1,0 +1,112 @@
+{
+    "build-configs": [
+        {
+            "build-dir": "lu_omp",
+            "build-cmd": "make -j4 lu_bench"
+        },
+        {
+            "build-dir": "polybench",
+            "build-cmd": "make -j4 lu_bench"
+        },
+        {
+            "build-dir": "lu_mpi_omp",
+            "build-cmd": "make -j4 lu_bench"
+        },
+        {
+            "build-dir": "lu_mpi_kokkos/build",
+            "build-cmd": "cmake ../. -DKOKKOS_DIR={0} -DCMAKE_BUILD_TYPE=Release; make -j4"
+        },
+        {
+            "build-dir": "lu_kokkos/build",
+            "build-cmd": "cmake ../. -DKOKKOS_DIR={0} -DCMAKE_BUILD_TYPE=Release; make -j4"
+        },
+        {
+            "build-dir": "lu_kokkos_dag/build",
+            "build-cmd": "cmake ../. -DKOKKOS_DIR={0} -DCMAKE_BUILD_TYPE=Release; make -j4"
+        }
+    ],
+    "run-configs-multi-node": [
+        {
+            "build-dir": "lu_mpi_omp",
+            "run-cmd": "mpirun -n {0} --map-by node:PE=1 ./lu_bench.o {1} {2} {3}",
+            "num-runs": 20
+        },
+        {
+            "build-dir": "lu_mpi_kokkos/build",
+            "run-cmd": "mpirun -n {0} --map-by node:PE=1 ./lu_bench.o {1} {2} {3}",
+            "num-runs": 20
+        }
+    ],
+    "run-configs-single-node": [
+        {
+            "build-dir": "lu_omp",
+            "run-cmd": "./lu_bench.o {0} {1} {2}",
+            "num-runs": 3
+        },
+        {
+            "build-dir": "lu_kokkos/build",
+            "run-cmd": "./lu_bench.o {0} {1} {2}",
+            "num-runs": 3
+        },
+        {
+            "build-dir": "lu_kokkos_dag/build",
+            "run-cmd": "./lu_bench.o {0} {1} {2}",
+            "num-runs": 3
+        },
+        {
+            "build-dir": "polybench",
+            "run-cmd": "./lu_bench.o {0} {1} {2}",
+            "num-runs": 3
+        }
+    ],
+    "bench-configs-single-node": [
+    ],
+    "bench-configs-multi-node": [
+        {
+            "num-nodes": 1,
+            "num-threads": 4
+        },
+        {
+            "num-nodes": 2,
+            "num-threads": 4
+        },
+        {
+            "num-nodes": 4,
+            "num-threads": 4
+        },
+        {
+            "num-nodes": 8,
+            "num-threads": 4
+        },
+        {
+            "num-nodes": 16,
+            "num-threads": 4
+        },
+        {
+            "num-nodes": 32,
+            "num-threads": 4
+        }
+    ],
+    "size-configs": [
+        {
+            "matrix-size": 1024,
+            "block-size": 128
+        },
+        {
+            "matrix-size": 2048,
+            "block-size": 128
+        },
+        {
+            "matrix-size": 4096,
+            "block-size": 256
+        },
+        {
+            "matrix-size": 6144,
+            "block-size": 512
+        },
+        {
+            "matrix-size": 8192,
+            "block-size": 512
+        }
+    ]
+}

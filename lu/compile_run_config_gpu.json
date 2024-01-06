@@ -1,0 +1,62 @@
+{
+    "build-configs": [
+        {
+            "build-dir": "lu_cuda_global/build",
+            "build-cmd": "cmake ../. -DCMAKE_BUILD_TYPE=Release; make -j4"
+        },
+        {
+            "build-dir": "lu_kokkos_gpu",
+            "build-cmd": "make -j4"
+        },
+        {
+            "build-dir": "lu_cuda_blocked",
+            "build-cmd": "cmake ../. -DCMAKE_BUILD_TYPE=Release; make -j4"
+        }
+
+    ],
+    "run-configs-single-node": [
+        {
+            "build-dir": "lu_cuda_global/build",
+            "run-cmd": "./lu_bench.o {1} {2}"
+        },
+        {
+            "build-dir": "lu_kokkos_gpu",
+            "run-cmd": "./lu_bench.cuda {1} {2}"
+        },
+        {
+            "build-dir": "lu_cuda_blocked",
+            "run-cmd": "./lu_cuda_blocked {1} {2}"
+        }
+    ],
+    "bench-configs-single-node": [ 1   ],
+
+    "bench-configs-multi-node": [
+        {
+            "num-nodes": 2,
+            "num-threads": 1
+        },
+        {
+            "num-nodes": 2,
+            "num-threads": 2
+        }
+    ],
+    "size-configs": [
+        {
+            "w": 512,
+            "h": 512
+        },
+        {
+            "w": 1024,
+            "h": 1024
+        },
+        {
+            "w": 2048,
+            "h": 2048
+        },
+        {
+            "w": 4096,
+            "h": 4096
+        }
+
+    ]
+}
